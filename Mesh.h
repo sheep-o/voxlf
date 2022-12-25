@@ -12,9 +12,11 @@
 class Mesh {
 public:
     Mesh(std::vector<float> vertices, std::vector<unsigned int> indices);
+    Mesh(std::vector<float> vertices, char faceCode, glm::vec3 pos);
     Mesh(std::vector<float> vertices, std::vector<unsigned int> indices, glm::vec3 pos);
+    ~Mesh();
     void Bind();
-    unsigned int VAO, VBO, EBO;
+    unsigned int VAO, VBO, EBO, m_IndexCount;
     glm::vec3 m_Pos;
 };
 

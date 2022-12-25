@@ -3,7 +3,7 @@ project(engine)
 
 set(CMAKE_CXX_STANDARD 23)
 
-link_directories(/opt/homebrew/lib)
+link_directories(/opt/homebrew/lib /usr/lib/x86_64-linux-gnu/)
 include_directories(/opt/homebrew/include)
 
 file(GLOB SRC
@@ -11,7 +11,7 @@ file(GLOB SRC
         "*.cpp"
         )
 
-add_executable(engine ${SRC} ShaderProgram.cpp ShaderProgram.h Window.cpp Window.h Camera.cpp Camera.h Mesh.cpp Mesh.h)
+add_executable(engine ${SRC} ShaderProgram.cpp ShaderProgram.h Window.cpp Window.h Camera.cpp Camera.h Mesh.cpp Mesh.h PerlinNoise.h gltext.h MeshBuilder.cpp MeshBuilder.h)
 find_package(OpenGL REQUIRED)
 target_link_libraries(engine OpenGL::GL)
 find_package(GLEW REQUIRED)

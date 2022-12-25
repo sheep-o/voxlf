@@ -25,6 +25,7 @@ Camera::Camera(float fov, float aspectRatio, glm::vec3 eye, glm::vec3 center, Sh
 
     m_pWindow = window;
     m_pProgram = program;
+    m_FOV = fov;
 }
 
 void Camera::CalculateView(float deltaTime) {
@@ -41,6 +42,11 @@ void Camera::CalculateView(float deltaTime) {
     if (m_pWindow->GetKey(GLFW_KEY_A)) {
         m_Pos -= glm::normalize(glm::cross(m_Front, m_Up)) * m_MoveSpeed * deltaTime;
     }
+    if (m_pWindow->GetKey(GLFW_KEY_F1)) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    } else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
     if (m_pWindow->GetKey(GLFW_KEY_ESCAPE)) {
         glfwSetInputMode(m_pWindow->m_pWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
@@ -49,13 +55,13 @@ void Camera::CalculateView(float deltaTime) {
     }
 
 
-    int chunkX = trunc(m_Pos.x / (float)CHUNK_WIDTH);
-    int chunkZ = trunc(m_Pos.z / (float)CHUNK_WIDTH);
+    int chunkX = floor(m_Pos.x / (float)CHUNK_WIDTH);
+    int chunkZ = floor(m_Pos.z / (float)CHUNK_WIDTH);
 
     m_ChunkPos.x = chunkX;
     m_ChunkPos.z = chunkZ;
 
-    printf("Position: (%f, y, %f) | Chunk: (%d, ?, %d)\n", m_Pos.x, m_Pos.z, chunkX, chunkZ);
+//    printf("Position: (%f, y, %f) | Chunk: (%d, ?, %d)\n", m_Pos.x, m_Pos.z, chunkX, chunkZ);
 
     // camera look
     double x, y;

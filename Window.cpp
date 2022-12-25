@@ -5,8 +5,15 @@
 #include "Window.h"
 #include <cstdio>
 
+void ErrorCallback(int, const char* err_str)
+{
+    fprintf(stderr, "GLFW ERROR: %s\n", err_str);
+}
+
 Window::Window(int width, int height, const char *title) {
-    if (!glfwInit()) fprintf(stderr, "Failed to initialize GLFW");
+    if (!glfwInit()) fprintf(stderr, "Failed to initialize GLFW\n");
+
+    glfwSetErrorCallback(ErrorCallback);
 
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -15,11 +22,12 @@ Window::Window(int width, int height, const char *title) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     m_pWindow = glfwCreateWindow(1280, 720, "Window", 0, 0);
-    if (!m_pWindow) fprintf(stderr, "Failed to create a window");
+    if (!m_pWindow) fprintf(stderr, "Failed to create a window\n");
 
     glfwMakeContextCurrent(m_pWindow);
 
-    if (glewInit() != GLEW_OK) fprintf(stderr, "Failed to initialize GLEW");
+    GLenum res = glewInit();
+    if (res != GLEW_OK) fprintf(stderr, "Failed to initialize GLEW: %s\n", glewGetErrorString(res));
 }
 
 void Window::SwapBuffers() {

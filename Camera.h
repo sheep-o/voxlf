@@ -28,11 +28,13 @@ public:
 
     float m_MoveSpeed;
     float m_LookSpeed;
+    float m_FOV;
 
     Window* m_pWindow;
     ShaderProgram* m_pProgram;
 
-    const int CHUNK_WIDTH = 2;
+    const int CHUNK_WIDTH = 4;
+    const int CHUNK_RADIUS = 2;
 private:
     double oldX = 0, oldY = 0, yaw = 0, pitch = 0;
 };
